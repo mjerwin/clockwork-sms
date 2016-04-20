@@ -175,6 +175,10 @@ class ClockworkClient
         $response = new DOMDocument();
         $response->loadXML($response_string);
 
+        $error_number = null;
+        $balance = null;
+        $error_description = null;
+
         foreach($response->documentElement->childNodes as $doc_child)
         {
             switch($doc_child->nodeName)
