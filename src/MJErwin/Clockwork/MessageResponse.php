@@ -40,7 +40,7 @@ class MessageResponse
      */
     function __construct($request_response_string)
     {
-         $response = new DOMDocument();
+        $response = new DOMDocument();
         $response->loadXML($request_response_string);
 
         foreach($response->documentElement->childNodes as $doc_child)
