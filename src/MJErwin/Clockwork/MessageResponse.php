@@ -40,32 +40,24 @@ class MessageResponse
      */
     function __construct($request_response_string)
     {
-        $response = new DOMDocument();
+         $response = new DOMDocument();
         $response->loadXML($request_response_string);
 
         foreach($response->documentElement->childNodes as $doc_child)
         {
             switch($doc_child->nodeName)
             {
-                case "SMS_Resp":
-                    foreach($doc_child->childNodes as $node_child)
-                    {
-                        switch($node_child->nodeName)
-                        {
-                            case "To":
-                                $this->setTo($node_child->nodeValue);
-                                break;
-                            case "MessageID":
-                                $this->setMessageId($node_child->nodeValue);
-                                break;
-                            case "ErrNo":
-                                $this->setErrorCode($node_child->nodeValue);
-                                break;
-                            case "ErrDesc":
-                                $this->setErrorDescription($node_child->nodeValue);
-                                break;
-                        }
-                    }
+                case "To":
+                    $this->setTo($doc_child->nodeValue);
+                    break;
+                case "MessageID":
+                    $this->setMessageId($doc_child->nodeValue);
+                    break;
+                case "ErrNo":
+                    $this->setErrorCode($doc_child->nodeValue);
+                    break;
+                case "ErrDesc":
+                    $this->setErrorDescription($doc_child->nodeValue);
                     break;
                 default:
                     break;
