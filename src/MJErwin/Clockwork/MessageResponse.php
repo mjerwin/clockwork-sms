@@ -38,20 +38,16 @@ class MessageResponse
      * @param string $request_response_string
      *
      */
-    function __construct($request_response_string)
+    public function __construct($request_response_string)
     {
         $response = new DOMDocument();
         $response->loadXML($request_response_string);
 
-        foreach($response->documentElement->childNodes as $doc_child)
-        {
-            switch($doc_child->nodeName)
-            {
+        foreach ($response->documentElement->childNodes as $doc_child) {
+            switch ($doc_child->nodeName) {
                 case "SMS_Resp":
-                    foreach($doc_child->childNodes as $node_child)
-                    {
-                        switch($node_child->nodeName)
-                        {
+                    foreach ($doc_child->childNodes as $node_child) {
+                        switch ($node_child->nodeName) {
                             case "To":
                                 $this->setTo($node_child->nodeValue);
                                 break;
@@ -144,6 +140,4 @@ class MessageResponse
     {
         return $this->getErrorCode() ? true : false;
     }
-
-
 }

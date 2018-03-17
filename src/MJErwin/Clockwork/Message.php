@@ -91,28 +91,23 @@ class Message
 
     protected function validate()
     {
-        if (!$this->getNumber())
-        {
+        if (!$this->getNumber()) {
             throw new InvalidMessageException('No number set in Message');
         }
 
-        if (!$this->getContent())
-        {
+        if (!$this->getContent()) {
             throw new InvalidMessageException('No content set in Message');
         }
     }
 
     protected function isValid()
     {
-        try
-        {
+        try {
             $this->validate();
-        } catch(ClockworkException $e)
-        {
+        } catch (ClockworkException $e) {
             return false;
         }
 
         return true;
     }
-
 }
