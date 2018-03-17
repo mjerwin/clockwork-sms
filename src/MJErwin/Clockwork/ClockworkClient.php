@@ -3,7 +3,6 @@
 
 namespace MJErwin\Clockwork;
 
-
 use MJErwin\Clockwork\Exception\ClockworkException;
 use MJErwin\Clockwork\Exception\ClockworkResponseException;
 use Curl\Curl;
@@ -48,7 +47,7 @@ class ClockworkClient
      */
     protected $truncate_enabled = true;
 
-    function __construct($api_key)
+    public function __construct($api_key)
     {
         $this->setApiKey($api_key);
     }
@@ -91,8 +90,7 @@ class ClockworkClient
             self::INVALID_CHAR_ACTION_REPLACE_CHARS
         ];
 
-        if (!in_array($invalid_char_action, $allowed_values))
-        {
+        if (!in_array($invalid_char_action, $allowed_values)) {
             throw new ClockworkException('InvalidCharAction must be one of the following values: ' . implode(', ', $allowed_values));
         }
 
@@ -179,10 +177,8 @@ class ClockworkClient
         $balance = null;
         $error_description = null;
 
-        foreach($response->documentElement->childNodes as $doc_child)
-        {
-            switch($doc_child->nodeName)
-            {
+        foreach ($response->documentElement->childNodes as $doc_child) {
+            switch ($doc_child->nodeName) {
                 case "Balance":
                     $balance = number_format(floatval($doc_child->nodeValue), 2);
                     break;
@@ -197,8 +193,7 @@ class ClockworkClient
             }
         }
 
-        if ($error_number)
-        {
+        if ($error_number) {
             throw new ClockworkResponseException('Clockwork API request responded with the following error: ' . '"' . $error_description . '"', $error_number);
         }
 
@@ -217,23 +212,18 @@ class ClockworkClient
 
         $parent_element = $xml->createElement($parent_element_name);
 
-        foreach($data as $key => $value)
-        {
-            if (is_array($value))
-            {
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
                 $child_element = $xml->createElement($key);
 
-                foreach($value as $sub_key => $sub_value)
-                {
+                foreach ($value as $sub_key => $sub_value) {
                     $element = $xml->createElement($sub_key, $sub_value);
 
                     $child_element->appendChild($element);
                 }
 
                 $parent_element->appendChild($child_element);
-            }
-            else
-            {
+            } else {
                 $element = $xml->createElement($key, $value);
 
                 $parent_element->appendChild($element);
@@ -258,13 +248,10 @@ class ClockworkClient
         $curl->setHeader('Content-Type', 'text/xml');
         $curl->post($uri, $data);
 
-        if ($curl->http_status_code !== 200)
-        {
+        if ($curl->http_status_code !== 200) {
             throw new ClockworkResponseException('Clockwork API request responded with a HTTP status code of ' . $curl->http_status_code);
         }
 
         return $curl;
     }
-
-
 }

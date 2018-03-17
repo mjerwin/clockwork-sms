@@ -3,7 +3,6 @@
 
 namespace MJErwin\Clockwork\Exception;
 
-
 /**
  * Class InvalidMessageException
  * @package MJErwin\Clockwork\Exception
@@ -12,5 +11,4 @@ namespace MJErwin\Clockwork\Exception;
  * */
 class InvalidMessageException extends ClockworkException
 {
-
-} 
+}
